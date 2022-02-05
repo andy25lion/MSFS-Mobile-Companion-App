@@ -1107,6 +1107,15 @@ function getSimulatorData() {
 		flaps_position = data.FLAPS_HANDLE_PERCENT;
 		spoilers = data.SPOILERS_ARMED;
 		
+		airspeed = data.AIRSPEED_INDICATED;
+		vertical_speed = data.VERTICAL_SPEED;
+		max_airspeed = data.AIRSPEED_BARBER_POLE
+		flaps_speed_exceeded = data.FLAP_SPEED_EXCEEDED
+		elevator_trim_pct = data.ELEVATOR_TRIM_PCT
+		//Engine
+		thr_lvr_value1 = data.GENERAL_ENG_THROTTLE_LEVER_POSITION1;
+		
+
 		//JF PA-28R
 		if (selected_plane.substring(0, 6) == "PA-28R") {
 			JF_PA_28R_LIGHT_BCN = data.JF_PA_28R_LIGHT_BCN;
@@ -1319,6 +1328,39 @@ function displayData() {
 	$("#landing-t3").text(landing_t3);
 	$("#landing-g3").text(landing_g3);
 	$("#sim-rate").text(sim_rate);
+
+	//My changes
+	$("#sim-rate2").text(sim_rate);
+	$("#airspeed-gauge").attr("data-value", airspeed);
+	$("#elv-trim-gauge").attr("data-value", -100 * elevator_trim_pct);
+	
+	var max_airspeed_gauge = max_airspeed+20;
+	var incr = (max_airspeed / 10) - (max_airspeed / 10)%10;
+	var i;
+	var text = "0";
+	for (i = incr; i < max_airspeed_gauge; i+=incr) {
+		text += "," + i;
+	}
+	text += "," + i;
+	max_airspeed_gauge = i;
+	$("#airspeed-gauge").attr("data-major-ticks", text);
+	$("#airspeed-gauge").attr("data-max-value", max_airspeed_gauge);
+	$("#airspeed-gauge").attr("data-highlights", JSON.stringify([
+		{"from": max_airspeed, "to":max_airspeed_gauge, "color": "rgba(200, 50, 50, .75)"}
+	]));
+	
+	// var flaps_lvl_txt = "Flaps: " + flaps_lvl;
+	// checkAndUpdateButton("#flaps-lvl-btn", flaps_lvl + 1, flaps_lvl_txt, flaps_lvl_txt);
+	// checkAndUpdateButton("#gear-sts-btn", gear_down + 1, "Gear up", "Gear down");
+	// checkAndUpdateButtonSecondary("#flaps-speed-btn", flaps_speed_exceeded + 1, flaps_speed_exceeded.toString(), "Flaps unsafe");
+
+	//Engine
+	// update += 1;
+	$("#thr-lvr-gauge").attr("data-value", thr_lvr_value1);
+	$("#ThrSet").val(thr_lvr_value1);
+	$("#thr-level-txt").text(thr_lvr_value1 + "%");
+
+	// $("#update-count").text(update);
 	
 	//JF PA-28R
 	if (selected_plane.substring(0, 6) == "PA-28R") {
@@ -1536,6 +1578,14 @@ function displayData() {
 		checkAndUpdateButton("#ASO_JU52C_AP_HEADING", ASO_JU52C_AP_HEADING, "On", "Off");
 		checkAndUpdateButton("#ASU_JU52C_ENTEISER", structural_deice, "Enteiser (On)", "Enteiser (Off)");
 	}
+}
+
+function checkAndUpdateButtonSecondary(buttonName, variableToCheck, onText="On", offText="Off") {
+    if (variableToCheck === 1) {
+        $(buttonName).removeClass("btn-secondary").addClass("btn-success").html(onText);
+    } else {
+        $(buttonName).removeClass("btn-success").addClass("btn-secondary").html(offText);
+    }
 }
 
 function checkAndUpdateButton(buttonName, variableToCheck, onText="On", offText="Off") {

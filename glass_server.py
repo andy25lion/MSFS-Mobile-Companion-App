@@ -554,6 +554,11 @@ def simconnect_thread_func(threadname):
             ui_friendly_dictionary["LANDING_VS3"] = landing_vs3
             ui_friendly_dictionary["LANDING_T3"] = landing_t3
             ui_friendly_dictionary["LANDING_G3"] = landing_g3
+        
+        ui_friendly_dictionary["AIRSPEED_BARBER_POLE"] =    round(await aq.get("AIRSPEED_BARBER_POLE"))
+        ui_friendly_dictionary["FLAP_SPEED_EXCEEDED"] =     round(await aq.get("FLAP_SPEED_EXCEEDED"))
+        ui_friendly_dictionary["FLAPS_HANDLE_INDEX"] =      round(await aq.get("FLAPS_HANDLE_INDEX"))
+        ui_friendly_dictionary["GEAR_HANDLE_POSITION"] =    round(await aq.get("GEAR_HANDLE_POSITION"))
 
     while True:
         asyncio.run(ui_dictionary(ui_friendly_dictionary, previous_alt, ui_friendly_dictionary["LANDING_T1"], ui_friendly_dictionary["LANDING_VS1"], ui_friendly_dictionary["LANDING_T2"], ui_friendly_dictionary["LANDING_VS2"], ui_friendly_dictionary["LANDING_T3"], ui_friendly_dictionary["LANDING_VS3"], ui_friendly_dictionary["LANDING_G1"], ui_friendly_dictionary["LANDING_G2"], ui_friendly_dictionary["LANDING_G3"]))
@@ -589,6 +594,14 @@ def simconnect_thread_func2(threadname):
         ui_friendly_dictionary["NAV1_OBS_DEG"] = round(await aq.get("NAV_OBS:1"), 0)
         ui_friendly_dictionary["ADF_CARD_DEG"] = round(await aq.get("ADF_CARD"), 0)
         ui_friendly_dictionary["NAV2_OBS_DEG"] = round(await aq.get("NAV_OBS:2"), 0)
+
+        ui_friendly_dictionary["GENERAL_ENG_THROTTLE_LEVER_POSITION1"] =    round(await aq.get("GENERAL_ENG_THROTTLE_LEVER_POSITION:1"))
+        ui_friendly_dictionary["GENERAL_ENG_THROTTLE_LEVER_POSITION2"] =    round(await aq.get("GENERAL_ENG_THROTTLE_LEVER_POSITION:2"))
+        ui_friendly_dictionary["GENERAL_ENG_THROTTLE_LEVER_POSITION3"] =    round(await aq.get("GENERAL_ENG_THROTTLE_LEVER_POSITION:3"))
+        ui_friendly_dictionary["GENERAL_ENG_THROTTLE_LEVER_POSITION4"] =    round(await aq.get("GENERAL_ENG_THROTTLE_LEVER_POSITION:4"))
+        ui_friendly_dictionary["AIRSPEED_INDICATED"] =                      round(await aq.get("AIRSPEED_INDICATED"))
+        ui_friendly_dictionary["VERTICAL_SPEED"] =                          round(await aq.get("VERTICAL_SPEED"))
+        ui_friendly_dictionary["ELEVATOR_TRIM_PCT"] =                       round(await aq.get("ELEVATOR_TRIM_PCT"))
     while True:
         asyncio.run(ui_dictionary(ui_friendly_dictionary))
 

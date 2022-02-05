@@ -1,3 +1,6 @@
+	<style>
+		html, body {margin: 0; height: 100%; overflow: hidden}
+	</style>
 	<div class="collapse {% if (post_loop.first) and (request.path != "/") %}show{% endif %}" id="collapseother" data-parent="#myGroup">
 		<div class="card bg-dark text-white" style="margin-top:10px;margin-bottom:12px">
 			<div class="card-body">
@@ -25,6 +28,8 @@
 										<th style="width:100px">Elev.</th>
 										<th style="width:100px">Rudd.</th>
 										<th style="width:100px">Ailr.</th>
+										<td></td>
+										<th style="width:100px">Thr.</th>
 									</tr>
 									<tr>
 										<td>Up</td>
@@ -53,6 +58,17 @@
 												</div>
 											</form>
 										</td>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td>
+											<button type="button" class="btn btn-light" id="thr-level-txt" style="padding-left:0px;padding-right:0px;width:65px">???</button>
+										</td>
+										<td>
+											<form>
+												<div class="form-group">
+													<input type="range" min="0" max="100" step="1" class="form-control-range" style="position:absolute;transform-origin:center left;width:25vh;margin-top:11vh;margin-left:23px;transform:rotate(270deg);-moz-transform:rotate(270deg)" oninput="setSimDatapoint('GENERAL_ENG_THROTTLE_LEVER_POSITION',this.value,true)" onmousedown="onThrTouch()" onmouseup="onThrRelease()" id="ThrSet">
+												</div>
+											</form>
+										</td>
 									</tr>
 									<tr>
 										<td>Down</td>
@@ -74,6 +90,13 @@
 											<button onpointerdown="presshold(function(){ aileronPlus() }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" style="width:45px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>  <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/></svg></button></br>
 											<button onpointerdown="presshold(function(){ aileronMinus() }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" style="width:45px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/><path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/></svg></button></br>
 											<button onclick="aileronReset();$(this).blur();" type="button" class="btn btn-warning" style="width:45px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-collapse" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zm7-8a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 4.293V.5A.5.5 0 0 1 8 0zm-.5 11.707-1.146 1.147a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 11.707V15.5a.5.5 0 0 1-1 0v-3.793z"/></svg></button>
+										</td>
+										<td></td>
+										<td></td>
+										<td>
+											<button onclick="disableScroll()" onpointerdown="presshold(function(){ thrPlus() }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" style="width:45px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/></svg></button></br>
+											<button onclick="enableScroll()" onpointerdown="presshold(function(){ thrMinus() }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" style="width:45px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/></svg></button></br>
+											<button onclick="thrReset();$(this).blur();" type="button" class="btn btn-warning" style="width:45px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-collapse" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zm7-8a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 4.293V.5A.5.5 0 0 1 8 0zm-.5 11.707-1.146 1.147a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 11.707V15.5a.5.5 0 0 1-1 0v-3.793z"/></svg></button>
 										</td>
 									</tr>
 								</table>

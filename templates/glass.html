@@ -195,6 +195,8 @@
 	{% endfor %}
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseData" aria-expanded="false" aria-controls="collapseData">Data</button>
 	<button class="btn btn-primary" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseOptions" aria-expanded="false" aria-controls="collapseOptions">Options</button>
+	
+	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseInstr" aria-expanded="false" aria-controls="collapseInstr">Instr</button>
 	&nbsp;&nbsp;
 </nav>
 
@@ -222,6 +224,8 @@
 	<!-- Options -->
 	{% include 'menu_options.html' %}
 
+	<!-- Instruments -->
+	{% include 'menu_instr.html' %}
 </div>
 
 
